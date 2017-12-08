@@ -3,13 +3,12 @@ package com.bux.crypto;
 
 import android.support.annotation.NonNull;
 
-import com.bux.crypto.internal.rest.CryptoRetrofitClient;
 import com.bux.crypto.domain.AccountDetails;
 import com.bux.crypto.domain.Market;
 import com.bux.crypto.domain.Order;
 import com.bux.crypto.domain.Trade;
+import com.bux.crypto.internal.rest.CryptoRetrofitClient;
 
-import rx.Observable;
 import rx.functions.Action1;
 
 public class CryptoDataManager {
@@ -18,10 +17,6 @@ public class CryptoDataManager {
 
     CryptoDataManager(String authorizationToken) {
         restServiceClient = CryptoRetrofitClient.newInstance(authorizationToken);
-    }
-
-    public Observable<Market[]> getMarketsObservable() {
-        return restServiceClient.getRetrofitInterface().getMarkets();
     }
 
     public void getMarkets(@NonNull final DataRequestListener<Market[]> listener) {
@@ -40,10 +35,6 @@ public class CryptoDataManager {
                 });
     }
 
-    public Observable<AccountDetails> getAccountDetailsObservable() {
-        return restServiceClient.getRetrofitInterface().getAccountDetails();
-    }
-
     public void getAccountDetails(@NonNull final DataRequestListener<AccountDetails> listener) {
         restServiceClient.getRetrofitInterface().getAccountDetails().subscribe(
                 new Action1<AccountDetails>() {
@@ -58,10 +49,6 @@ public class CryptoDataManager {
                         listener.requestFailed(throwable.getMessage(), throwable);
                     }
                 });
-    }
-
-    public Observable<Order> buyCryptoObservable(String cryptoAsset, Trade trade) {
-        return restServiceClient.getRetrofitInterface().buyCrypto(cryptoAsset, trade);
     }
 
     public void buyCrypto(String cryptoAsset, Trade trade, @NonNull final DataRequestListener<Order> listener) {
@@ -81,10 +68,6 @@ public class CryptoDataManager {
     }
 
 
-    public Observable<Order> sellCryptoObservable(String cryptoAsset, Trade trade) {
-        return restServiceClient.getRetrofitInterface().sellCrypto(cryptoAsset, trade);
-    }
-
     public void sellCrypto(String cryptoAsset, Trade trade, @NonNull final DataRequestListener<Order> listener) {
         restServiceClient.getRetrofitInterface().sellCrypto(cryptoAsset, trade).subscribe(
                 new Action1<Order>() {
@@ -99,10 +82,6 @@ public class CryptoDataManager {
                         listener.requestFailed(throwable.getMessage(), throwable);
                     }
                 });
-    }
-
-    public Observable<Order> cancelOrderObservable(String cryptoAsset, String orderId) {
-        return restServiceClient.getRetrofitInterface().cancelOrder(cryptoAsset, orderId);
     }
 
     public void cancelOrderObservable(String cryptoAsset, String orderId, @NonNull final DataRequestListener<Order> listener) {
@@ -120,7 +99,6 @@ public class CryptoDataManager {
                     }
                 });
     }
-
 
     public interface DataRequestListener<T> {
         void dataReceived(T data);

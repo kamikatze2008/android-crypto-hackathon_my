@@ -1,14 +1,13 @@
 package com.bux.crypto;
 
+import com.bux.crypto.domain.Market;
+import com.bux.crypto.domain.SubscribeMessage;
 import com.bux.crypto.internal.core.websocket.WebSocketConnectionClient;
 import com.bux.crypto.internal.core.websocket.WebSocketEvent;
-import com.bux.crypto.domain.Market;
 import com.bux.crypto.internal.websocket.CryptoWebSocketClient;
-import com.bux.crypto.domain.SubscribeMessage;
 
 import java.util.LinkedList;
 
-import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -23,15 +22,11 @@ public class CryptoWebSocketConnectionManager {
         webSocketConnectionClient = CryptoWebSocketClient.newInstance(authorizationToken);
     }
 
-    public Observable<WebSocketEvent> getConnectionObservable() {
-        return webSocketConnectionClient.getConnectionObservable();
-    }
-
     public void disconnect() {
         webSocketConnectionClient.closeConnection();
     }
 
-    public void subscribeForMarkets(Market[] markets) {
+    public void subscribeForMarkets(Market... markets) {
         SubscribeMessage.Builder builder = new SubscribeMessage.Builder();
         for (Market market : markets) {
             builder.addSubscription(market);
@@ -39,7 +34,7 @@ public class CryptoWebSocketConnectionManager {
         webSocketConnectionClient.sendMessage(builder.build());
     }
 
-    public void unsubscribeFromMarkets(Market[] markets) {
+    public void unsubscribeFromMarkets(Market... markets) {
         SubscribeMessage.Builder builder = new SubscribeMessage.Builder();
         for (Market market : markets) {
             builder.removeSubscription(market);
@@ -47,7 +42,7 @@ public class CryptoWebSocketConnectionManager {
         webSocketConnectionClient.sendMessage(builder.build());
     }
 
-    public void registerForEvents(final WebSocketListener listener) {
+    public void registerEventsListener(final WebSocketListener listener) {
         listeners.add(listener);
         if (webSocketSubscription == null || webSocketSubscription.isUnsubscribed()) {
             webSocketSubscription = webSocketConnectionClient.getConnectionObservable().subscribe(
@@ -66,20 +61,18 @@ public class CryptoWebSocketConnectionManager {
         }
     }
 
-    public void unregisterFromEvents(WebSocketListener listener) {
+    public void unregisterEventsListener(WebSocketListener listener) {
         listeners.remove(listener);
         if (listeners.isEmpty()) {
             webSocketSubscription.unsubscribe();
         }
     }
 
-
     private void notifyListeners(WebSocketEvent event) {
         for (WebSocketListener listener : listeners) {
             listener.onEventReceived(event);
         }
     }
-
 
     public interface WebSocketListener {
         void onEventReceived(WebSocketEvent event);
