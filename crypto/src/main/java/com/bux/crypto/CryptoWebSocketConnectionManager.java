@@ -9,6 +9,7 @@ import com.bux.crypto.internal.websocket.CryptoWebSocketClient;
 import java.util.LinkedList;
 
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class CryptoWebSocketConnectionManager {
@@ -45,19 +46,21 @@ public class CryptoWebSocketConnectionManager {
     public void registerEventsListener(final WebSocketListener listener) {
         listeners.add(listener);
         if (webSocketSubscription == null || webSocketSubscription.isUnsubscribed()) {
-            webSocketSubscription = webSocketConnectionClient.getConnectionObservable().subscribe(
-                    new Action1<WebSocketEvent>() {
-                        @Override
-                        public void call(WebSocketEvent event) {
-                            notifyListeners(event);
-                        }
-                    },
-                    new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            listener.onError(throwable);
-                        }
-                    });
+            webSocketSubscription = webSocketConnectionClient.getConnectionObservable()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            new Action1<WebSocketEvent>() {
+                                @Override
+                                public void call(WebSocketEvent event) {
+                                    notifyListeners(event);
+                                }
+                            },
+                            new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    listener.onError(throwable);
+                                }
+                            });
         }
     }
 
