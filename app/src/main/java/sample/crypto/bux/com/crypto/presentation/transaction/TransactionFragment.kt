@@ -15,6 +15,8 @@ class TransactionFragment : Fragment() {
         val QUOTE_CURRENCY_KEY = "quote_currency_key"
         val BEST_ASK_KEY = "best_ask_key"
         val BEST_BID_KEY = "best_bid_key"
+//        in order if we need whole market object, but I prefer just group of parameters
+//        val MARKET_KEY = "market_key"
 
         fun newInstance(market: Market): TransactionFragment {
             val bundle = Bundle().apply {
@@ -22,6 +24,7 @@ class TransactionFragment : Fragment() {
                 putString(QUOTE_CURRENCY_KEY, market.quoteCurrency)
                 putString(BEST_ASK_KEY, market.bestAsk.toPlainString())
                 putString(BEST_BID_KEY, market.bestBid.toPlainString())
+//                putParcelable(MARKET_KEY, market)
             }
             return TransactionFragment().apply { arguments = bundle }
         }

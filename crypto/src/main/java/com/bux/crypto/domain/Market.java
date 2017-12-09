@@ -41,6 +41,29 @@ public class Market implements Parcelable, Subscribable {
         return lastUpdated;
     }
 
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public void setBaseCurrency(final String baseCurrency) {
+        this.baseCurrency = baseCurrency;
+    }
+
+    public void setQuoteCurrency(final String quoteCurrency) {
+        this.quoteCurrency = quoteCurrency;
+    }
+
+    public void setBestBid(final BigDecimal bestBid) {
+        this.bestBid = bestBid;
+    }
+
+    public void setBestAsk(final BigDecimal bestAsk) {
+        this.bestAsk = bestAsk;
+    }
+
+    public void setLastUpdated(final Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
     @Override
     public int describeContents() {
