@@ -34,12 +34,10 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 
 /**
- * This class implements {@link WebSocketConnectionClient} for the Bux server.
- * Currently it works based on OkHttp implementation of web sockets, but this can be changed by passing another {@link WebSocketConnectionClient}
- * implementation to the constructor.
- * <p/>
- * Connection life time is optimized in order to keep connection opened only when client is actively using it. When client is connected but
- * doesn't listen to any of channels, connection will be automatically closed in {@link #INACTIVE_CONNECION_TIMEOUT} time.
+ * This class implements {@link WebSocketConnectionClient} for the Crypto server.
+ * Connection life time is optimized in order to keep connection opened only when client is actively using it.
+ * When client is connected but doesn't listen to any of channels, connection will be automatically
+ * closed in {@link #INACTIVE_CONNECION_TIMEOUT} time.
  */
 public class CryptoWebSocketClient implements WebSocketConnectionClient {
     private static final long INACTIVE_CONNECION_TIMEOUT = TimeUnit.MINUTES.toMillis(5);

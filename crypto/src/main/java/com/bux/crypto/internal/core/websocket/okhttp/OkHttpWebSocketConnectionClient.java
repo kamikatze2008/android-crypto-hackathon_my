@@ -156,7 +156,7 @@ public class OkHttpWebSocketConnectionClient implements WebSocketConnectionClien
 
             @Override
             public void onClosed(WebSocket webSocket, int code, String reason) {
-                if (true) { //TODO
+                if (BuildConfig.DEBUG) {
                     Log.d(TAG, "WebSocket connection closed: " + reason);
                 }
                 isOpen = false;

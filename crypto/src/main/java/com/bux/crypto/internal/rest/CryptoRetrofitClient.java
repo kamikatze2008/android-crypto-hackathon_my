@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
 
 /**
- * {@link com.bux.crypto.internal.core.websocket.WebSocketConnectionClient} configured for BUX API service
+ * {@link com.bux.crypto.internal.core.websocket.WebSocketConnectionClient} configured for Crypto API service
  */
 public class CryptoRetrofitClient extends BaseRetrofitClient<CryptoRestServiceInterface> {
     private static final int READ_TIMEOUT_SEC = 30;
