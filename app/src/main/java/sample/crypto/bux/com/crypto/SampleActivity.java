@@ -8,7 +8,7 @@ import com.bux.crypto.CryptoDataManager;
 import com.bux.crypto.CryptoWebSocketConnectionManager;
 
 /**
- * Use {@link #cryptoDataManager} and {@link #cryptoWebSocketConnectionManager} to work with your data.
+ * Use {@link #cryptoDataManager} and {@link #cryptoWebSocketConnectionManager} to work with data.
  */
 public class SampleActivity extends AppCompatActivity {
 
