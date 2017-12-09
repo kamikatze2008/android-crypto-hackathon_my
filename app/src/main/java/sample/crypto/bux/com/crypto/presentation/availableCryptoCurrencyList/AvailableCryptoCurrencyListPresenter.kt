@@ -41,6 +41,14 @@ class AvailableCryptoCurrencyListPresenter @Inject constructor(
         it.forEach {
             rxCryptoWebSocketConnectionManager.subscribeForMarkets(it)
         }
+    }
+
+    override fun resume() {
+        super.resume()
+        subscribeForSocketObservable()
+    }
+
+    private fun subscribeForSocketObservable() {
         safeSubscribe {
             rxCryptoWebSocketConnectionManager.connectionObservable
                     .subscribeOn(Schedulers.io())
